@@ -1,4 +1,4 @@
-package lk.ijse.hardware.model;
+package lk.ijse.hardware.model.tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
-public class Customer {
-    private String c_id;
+public class SupplierTm {
+    private String s_id;
     private String name;
-    private String address;
-    private String  tel;
+    private String company;
+    private String tel;
     private String email;
 
 }

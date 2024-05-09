@@ -15,19 +15,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Customer;
-import lk.ijse.hardware.model.Employee;
-import lk.ijse.hardware.model.tm.EmployeeTm;
+import lk.ijse.hardware.model.Driver;
+import lk.ijse.hardware.model.tm.DriverTm;
 import lk.ijse.hardware.repository.CustomerRepo;
-import lk.ijse.hardware.repository.EmployeeRepo;
+import lk.ijse.hardware.repository.DriverRepo;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class EmployeeManageFormController {
-
-    @FXML
-    private TableColumn<?, ?> colAddress;
+public class DriverFormController {
 
     @FXML
     private TableColumn<?, ?> colEmail;
@@ -39,19 +36,16 @@ public class EmployeeManageFormController {
     private TableColumn<?, ?> colName;
 
     @FXML
-    private TableColumn<?, ?> colSalary;
-
-    @FXML
     private TableColumn<?, ?> colTel;
 
     @FXML
-    private AnchorPane employeeRoot;
+    private TableColumn<?, ?> colWorkTime;
 
     @FXML
-    private TableView<EmployeeTm> tblEmployee;
+    private AnchorPane driverRoot;
 
     @FXML
-    private JFXTextField txtAddress;
+    private TableView<DriverTm> tblDriver;
 
     @FXML
     private JFXTextField txtEmail;
@@ -63,10 +57,10 @@ public class EmployeeManageFormController {
     private JFXTextField txtName;
 
     @FXML
-    private JFXTextField txtSalary;
+    private JFXTextField txtTel;
 
     @FXML
-    private JFXTextField txtTel;
+    private JFXTextField txtWorkTime;
 
     public void initialize() {
 
@@ -78,11 +72,11 @@ public class EmployeeManageFormController {
 
         txtName.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                txtAddress.requestFocus();
+                txtWorkTime.requestFocus();
             }
         });
 
-        txtAddress.setOnKeyPressed(event -> {
+        txtWorkTime.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 txtTel.requestFocus();
             }
@@ -94,37 +88,29 @@ public class EmployeeManageFormController {
             }
         });
 
-        txtEmail.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                txtSalary.requestFocus();
-            }
-        });
-
         setCellValueFactory();
-        loadAllEmployees();
+        loadAllDrivers();
     }
 
-    private void loadAllEmployees() {
-        ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
+    private void loadAllDrivers() {
+        ObservableList<DriverTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Employee> employeeList;
-            employeeList = EmployeeRepo.getAll();
-            for (Employee employee : employeeList) {
-                EmployeeTm tm = new EmployeeTm(
-                        employee.getE_id(),
-                        employee.getName(),
-                        employee.getAddress(),
-                        employee.getTel(),
-                        employee.getEmail(),
-                        employee.getSalary()
-
+            List<Driver> driverList;
+            driverList = DriverRepo.getAll();
+            for (Driver driver : driverList) {
+                DriverTm tm = new DriverTm(
+                        driver.getD_id(),
+                        driver.getName(),
+                        driver.getTel(),
+                        driver.getEmail(),
+                        driver.getWork_time()
                 );
 
                 obList.add(tm);
             }
 
-            tblEmployee.setItems(obList);
+            tblDriver.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -134,17 +120,15 @@ public class EmployeeManageFormController {
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("ID"));
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        colWorkTime.setCellValueFactory(new PropertyValueFactory<>("Work Hour"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("Tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        colSalary.setCellValueFactory(new PropertyValueFactory<>("Salary"));
     }
-
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));
-        Stage stage = (Stage) employeeRoot.getScene().getWindow();
+        Stage stage = (Stage) driverRoot.getScene().getWindow();
 
         stage.setScene(new Scene(anchorPane));
         stage.setTitle("Dashboard Form");
@@ -153,12 +137,12 @@ public class EmployeeManageFormController {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        String e_id = txtId.getText();
+        String d_id = txtId.getText();
 
         try {
-            boolean isDeleted = EmployeeRepo.delete(e_id);
+            boolean isDeleted = CustomerRepo.delete(d_id);
             if (isDeleted) {
-                new Alert(Alert.AlertType.CONFIRMATION, "employee deleted!").show();
+                new Alert(Alert.AlertType.CONFIRMATION, "driver deleted!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -167,20 +151,18 @@ public class EmployeeManageFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String e_id = txtId.getText();
+        String d_id = txtId.getText();
         String name = txtName.getText();
-        String address = txtAddress.getText();
         String tel = txtTel.getText();
         String email = txtEmail.getText();
-        double salary = Double.parseDouble(txtSalary.getText());
+        String work_time = txtWorkTime.getText();
 
-
-        Employee employee = new Employee(e_id, name, address, tel, email,salary);
+        Driver driver = new Driver(d_id, name, tel, email,work_time);
 
         try {
-            boolean isSaved = EmployeeRepo.save(employee);
+            boolean isSaved = DriverRepo.save(driver);
             if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "employee saved!").show();
+                new Alert(Alert.AlertType.CONFIRMATION, "driver saved!").show();
                 clearFields();
             }
         } catch (SQLException e) {
@@ -191,48 +173,45 @@ public class EmployeeManageFormController {
     private void clearFields() {
         txtId.setText("");
         txtName.setText("");
-        txtAddress.setText("");
         txtTel.setText("");
         txtEmail.setText("");
-        txtSalary.setText("");
+        txtWorkTime.setText("");
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        String e_id = txtId.getText();
+        String d_id = txtId.getText();
         String name = txtName.getText();
-        String address = txtAddress.getText();
         String tel = txtTel.getText();
         String email = txtEmail.getText();
-        double salary = Double.parseDouble(txtSalary.getText());
+        String work_time = txtWorkTime.getText();
 
-        Employee employee = new Employee(e_id, name, address, tel, email,salary);
+        Driver driver = new Driver(d_id, name, tel, email,work_time);
 
         try {
-            boolean isUpdated = EmployeeRepo.update(employee);
+            boolean isUpdated = DriverRepo.update(driver);
             if (isUpdated) {
-                new Alert(Alert.AlertType.CONFIRMATION, "employee updated!").show();
+                new Alert(Alert.AlertType.CONFIRMATION, "driver updated!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
+
     @FXML
     void txtSearchOnAction(ActionEvent event) throws SQLException {
-        String e_id = txtId.getText();
+        String id = txtId.getText();
 
-        Employee employee = EmployeeRepo.searchById(e_id);
-        if (employee != null) {
-            txtId.setText(employee.getE_id());
-            txtName.setText(employee.getName());
-            txtAddress.setText(employee.getAddress());
-            txtTel.setText(employee.getTel());
-            txtEmail.setText(employee.getEmail());
-            txtSalary.setText(String.valueOf(employee.getSalary()));
+        Driver driver = DriverRepo.searchById(id);
+        if (driver != null) {
+            txtId.setText(driver.getD_id());
+            txtName.setText(driver.getName());
+            txtTel.setText(driver.getTel());
+            txtEmail.setText(driver.getEmail());
+            txtWorkTime.setText(driver.getWork_time());
         } else {
-            new Alert(Alert.AlertType.INFORMATION, "employee not found!").show();
+            new Alert(Alert.AlertType.INFORMATION, "driver not found!").show();
         }
-
     }
 
 }

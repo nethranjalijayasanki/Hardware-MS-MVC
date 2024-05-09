@@ -14,6 +14,6 @@ public class Order {
     private int qty_on_hand;
     private double price;
     private String c_id;
-    private String t_id;
+    private String s_id;
 
 }

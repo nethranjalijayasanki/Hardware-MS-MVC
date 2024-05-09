@@ -1,4 +1,4 @@
-package lk.ijse.hardware.model;
+package lk.ijse.hardware.model.tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
-public class Item {
-    private String i_id;
-    private String s_id;
+public class TransportTm {
+    private String t_id;
     private String description;
-    private double unit_price;
-    private int qty_on_hand;
+    private String d_id;
+
 
 }

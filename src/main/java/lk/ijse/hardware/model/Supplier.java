@@ -12,7 +12,7 @@ public class Supplier {
     private String s_id;
     private String name;
     private String company;
-    private int tel;
+    private String  tel;
     private String email;
 
 }

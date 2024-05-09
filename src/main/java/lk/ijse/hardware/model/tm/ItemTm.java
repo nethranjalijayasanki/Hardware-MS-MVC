@@ -1,5 +1,6 @@
-package lk.ijse.hardware.model;
+package lk.ijse.hardware.model.tm;
 
+import com.jfoenix.controls.JFXButton;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
-public class Item {
+public class ItemTm {
     private String i_id;
-    private String s_id;
     private String description;
-    private double unit_price;
-    private int qty_on_hand;
+    private double unitPrice;
+    private int qtyOnHand;
+    private String s_id;
 
 }

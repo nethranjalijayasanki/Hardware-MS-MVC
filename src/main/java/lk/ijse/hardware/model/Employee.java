@@ -12,8 +12,9 @@ public class Employee {
     private String e_id;
     private String name;
     private  String address;
-    private int tel;
+    private String tel;
     private String email;
     private double salary;
+
 
 }

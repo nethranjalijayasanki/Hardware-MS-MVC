@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Driver {
     private String d_id;
     private String name;
-    private int tel;
+    private String  tel;
     private String email;
     private String work_time;
 

@@ -26,7 +26,7 @@ public class LoginFormController {
     private AnchorPane formRoot;
 
     @FXML
-    private AnchorPane rootLogin;
+    private AnchorPane root;
 
     @FXML
     private JFXTextField txtId;
@@ -35,7 +35,7 @@ public class LoginFormController {
     private JFXTextField txtPassword;
 
     @FXML
-    void btnLoginOnAction(ActionEvent event) {
+    void btnLoginOnAction(ActionEvent event) throws SQLException, IOException {
         String password = txtPassword.getText();
         String username = txtId.getText();
 
@@ -43,45 +43,40 @@ public class LoginFormController {
 
     }
 
-    private void checkCredential(String password, String username) {
+    private void checkCredential(String password, String username) throws SQLException,IOException {
         String sql = "SELECT userId, password from users where userId = ? ";
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
-            PreparedStatement pstm = connection.prepareStatement(sql);
-            pstm.setObject(1, username);
-            ResultSet resultSet = pstm.executeQuery();
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, username);
 
-            if (resultSet.next()){
-                String pw = resultSet.getString("password");
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()) {
+            String dbPw = resultSet.getString("password");
 
-                if (password.equals(pw)){
-                    loginDashboard();
-                }else {
-                    new Alert(Alert.AlertType.ERROR,"Sorry! Your Password is incorrect").show();
-                }
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Sorry! Your Username is incorrect").show();
+            if(password.equals(dbPw)) {
+                navigateToTheDashboard();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "sorry! password is incorrect!").show();
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "sorry! user id can't be find!").show();
         }
 
     }
 
-    private void loginDashboard() {
-        try {
-            AnchorPane root = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) rootLogin.getScene().getWindow();
-            stage.setScene(scene);
-            stage.centerOnScreen();
+    private void navigateToTheDashboard() throws IOException {
+        AnchorPane root = FXMLLoader.load(this.getClass().getResource("/view/dashboard_form.fxml"));
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) this.root.getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.setTitle("Dashboard Form");
     }
+
 
 }
 
