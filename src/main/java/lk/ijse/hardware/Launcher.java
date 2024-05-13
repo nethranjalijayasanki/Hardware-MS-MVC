@@ -7,15 +7,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
+    public static Stage stage;
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage stage1) throws Exception {
+    public void start(Stage stage) throws Exception {
+        this.stage =stage;
         AnchorPane root = FXMLLoader.load(getClass().getResource("/view/login_form.fxml"));
         Scene scene = new Scene(root);
-        Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     }

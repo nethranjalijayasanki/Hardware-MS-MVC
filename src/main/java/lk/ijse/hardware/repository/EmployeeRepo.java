@@ -55,7 +55,7 @@ public class EmployeeRepo {
         return pstm.executeUpdate() > 0;
     }
     public static List<Employee> getAll() throws SQLException {
-        String sql = "SELECT * FROM employee";
+        String sql = "SELECT * FROM employees";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);

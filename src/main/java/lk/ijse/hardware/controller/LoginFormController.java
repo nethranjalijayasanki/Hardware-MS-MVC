@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.hardware.Launcher;
 import lk.ijse.hardware.db.DbConnection;
 
 import java.io.IOException;
@@ -71,7 +72,10 @@ public class LoginFormController {
 
         Scene scene = new Scene(root);
 
-        Stage stage = (Stage) this.root.getScene().getWindow();
+        //Stage stage = (Stage) this.root.getScene().getWindow();
+
+        Stage stage = Launcher.stage;
+
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.setTitle("Dashboard Form");

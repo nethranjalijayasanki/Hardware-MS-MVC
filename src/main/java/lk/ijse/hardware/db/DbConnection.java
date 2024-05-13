@@ -10,9 +10,9 @@ public class DbConnection {
 
     private DbConnection() throws SQLException {
         connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/kade",
+                "jdbc:mysql://localhost:3306/hardware",
                 "root",
-                "Ijse@1234"
+                "Ijse@123"
         );
     }
 

@@ -33,7 +33,7 @@ insert into suppliers values ("S002","amal","perera(plc)","0112667834","pererapl
 create table items(
                       i_id varchar(5) primary key,
                       description varchar(25) not null ,
-                      unit_price double not null ,
+                      unit_price decimal not null ,
                       s_id varchar(5),
                       foreign key(s_id) references suppliers(s_id) on update cascade on delete cascade,
                       qty_on_hand int not null
@@ -51,7 +51,7 @@ create table drivers(
                         work_time varchar(50) not null
 );
 insert into drivers values ("D001","amil","0112227834","pereraplc@gmail.com","8h");
-insert into drivers values ("D002","waruna","0116227834"","warunaplc@gmail.com","6h");
+insert into drivers values ("D002","waruna","0116227834","warunaplc@gmail.com","6h");
 
 
 create table employees(
@@ -60,11 +60,11 @@ create table employees(
                           address varchar(20) not null ,
                           tel varchar(10) not null ,
                           email varchar(50) not null,
-                          salary double not null ,
+                          salary decimal not null ,
                           c_id varchar(5)  ,
                           foreign key(c_id) references customers(c_id) on update cascade on delete cascade
 );
-insert into employees values ("E001","kasun","colombo","0116227834","kasun@gmail.com",25000.00,"C001");
+insert into employees values ("E001","kasun","colombo",0116227834,"kasun@gmail.com",25000.00,"C001");
 
 
 create table transports(
@@ -73,13 +73,14 @@ create table transports(
                            d_id varchar(5) ,
                            foreign key(d_id) references drivers(d_id) on update cascade on delete cascade
 );
-
+insert into transports values ("T001","home improvement item","D001");
+insert into transports values ("T002","home improvement item","D001");
 
 create table orders(
                        o_id varchar(5) primary key,
                        name varchar(20) not null ,
                        qty_on_hand int not null ,
-                       price double not null ,
+                       price decimal not null ,
                        c_id varchar(5),
                        foreign key(c_id) references customers(c_id) on update cascade on delete cascade,
                        s_id varchar(5),
@@ -101,7 +102,7 @@ create table order_item_detail(
                                   o_qty_on_hand int not null ,
                                   sold_item_count int not null ,
                                   date date ,
-                                  unit_price double not null,
+                                  unit_price decimal not null,
                                   o_id varchar(5),
                                   foreign key(o_id) references orders(o_id) on update cascade on delete cascade,
                                   i_id varchar(5),
@@ -119,4 +120,3 @@ create table supplier_item_detail(
 );
 
  */
-

@@ -14,6 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.hardware.model.tm.CartTm;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class PlaceOrderFormController {
 
     @FXML
@@ -82,13 +85,29 @@ public class PlaceOrderFormController {
         setCellValueFactory();
     }
 
+    private void getItemCodes() {
+
+    }
+
+    private void getCustomerIds() {
+
+    }
+
+    private void getCurrentOrderId() {
+
+    }
+
+    private void setDate() {
+
+    }
+
     private void setCellValueFactory() {
-        colItemCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
+        colItemId.setCellValueFactory(new PropertyValueFactory<>("Item ID"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("Qty"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("Action"));
     }
 
 

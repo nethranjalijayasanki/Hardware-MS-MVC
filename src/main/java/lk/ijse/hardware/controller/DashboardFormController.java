@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.db.DbConnection;
 
@@ -24,7 +25,7 @@ public class DashboardFormController {
 
     @FXML
     public Label lblCustomerCount;
-    private int customerCount;
+
 
     @FXML
     public Label lblOrderCount;
@@ -35,44 +36,19 @@ public class DashboardFormController {
     @FXML
     private JFXTextField txtSearch;
 
+public void initialize(){
+    try {
+        AnchorPane root1 = FXMLLoader.load(getClass().getResource("/view/innerDashboart.fxml"));
+        dashboardRoot1.getChildren().clear();
+        dashboardRoot1.getChildren().add(root1);
 
-    public void initialize() {
-        try {
-            customerCount = getCustomerCount();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-        setCustomerCount(customerCount);
-    }
-    private void setCustomerCount(int customerCount) {
-        lblCustomerCount.setText(String.valueOf(customerCount));
+    } catch (IOException e) {
+        throw new RuntimeException(e);
     }
 
-    private int getCustomerCount() throws SQLException {
-        String sql = "SELECT COUNT(*) AS customer_count FROM customers";
+}
 
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        ResultSet resultSet = pstm.executeQuery();
 
-        if(resultSet.next()) {
-            return resultSet.getInt("customer_count");
-        }
-        return 0;
-    }
-    @FXML
-    void btnBackOnAction(ActionEvent event) {
-        try {
-            AnchorPane root1 = FXMLLoader.load(getClass().getResource("/view/login_form.fxml"));
-            Scene scene = new Scene(root1);
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(scene);
-            stage.centerOnScreen();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @FXML
     void btnCustomerOnAction(ActionEvent event) {
@@ -134,6 +110,7 @@ public class DashboardFormController {
         }
     }
 
+
     @FXML
     void btnSupplierOnAction(ActionEvent event) {
         try {
@@ -158,9 +135,6 @@ public class DashboardFormController {
         }
     }
 
-    @FXML
-    void txtSearchOnAction(ActionEvent event) {
 
-    }
 
 }
