@@ -101,10 +101,11 @@ public class ItemManageFormController {
             for (Item item : itemList) {
                 ItemTm tm = new ItemTm(
                         item.getI_id(),
+                        item.getS_id(),
                         item.getDescription(),
                         item.getUnit_price(),
-                        item.getQty_on_hand(),
-                        item.getS_id()
+                        item.getQty_on_hand()
+
                 );
 
                 obList.add(tm);
@@ -120,8 +121,8 @@ public class ItemManageFormController {
         colI_id.setCellValueFactory(new PropertyValueFactory<>("i_id"));
         colS_id.setCellValueFactory(new PropertyValueFactory<>("s_id"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
-        colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("Qty On Hand"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
 
     }
     @FXML

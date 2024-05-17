@@ -18,7 +18,7 @@
          </font>
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498db" height="35.0" layoutX="252.0" layoutY="27.0" rotate="45.0" stroke="#3498db" strokeType="INSIDE" width="35.0" />
-      <JFXButton layoutX="1108.0" layoutY="514.0" onAction="#btnBackOnAction" style="-fx-background-color: #3498db;" text="Back" textFill="#f8f6f6">
+      <JFXButton layoutX="1108.0" layoutY="514.0" onAction="#btnBackOnAction" prefHeight="27.0" prefWidth="64.0" style="-fx-background-color: #3498db;" text="Back" textFill="#f8f6f6">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -28,7 +28,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="961.0" layoutY="514.0" onAction="#btnPlaceOrderOnAction" style="-fx-background-color: #273c75;" text="Place Order" textFill="#f8f6f6">
+      <JFXButton layoutX="961.0" layoutY="514.0" onAction="#btnPrintOnAction" prefHeight="27.0" prefWidth="92.0" style="-fx-background-color: #273c75;" text="Print" textFill="#f8f6f6">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -108,5 +108,10 @@
          </font>
       </Label>
       <TextField fx:id="txtQty" layoutX="891.0" layoutY="128.0" onAction="#txtQtyOnAction" prefHeight="25.0" prefWidth="49.0" />
+      <JFXButton layoutX="858.0" layoutY="514.0" onAction="#btnPlaceOrderOnAction" style="-fx-background-color: #273c75;" text="Place Order" textFill="#f8f6f6">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -125,6 +125,23 @@ values
 ('2024-05-12',4),
 ('2024-05-18',5);
 
+
+create table order_detail(
+                             o_id int,
+                             foreign key(o_id) references orders(o_id) on update cascade on delete cascade,
+                             i_id int,
+                             foreign key(i_id) references items(i_id) on update cascade on delete cascade,
+                             qty int not null ,
+                             unit_price decimal not null
+);
+insert into order_detail (o_id,i_id,qty,unit_price)
+values
+    (1,2,10,12.00),
+    (2,2,20,12.00),
+    (3,1,5,120.00),
+    (4,3,1,12.00),
+    (5,2,10,12.00);
+
 /*
 create table payments(A
                          p_id varchar(5) primary key,
@@ -137,21 +154,6 @@ create table payments(A
 
 
 
-create table order_detail(
-                            o_id int,
-                            foreign key(o_id) references orders(o_id) on update cascade on delete cascade,
-                            i_id int,
-                            foreign key(i_id) references items(i_id) on update cascade on delete cascade,
-                            qty int not null ,
-                            unit_price decimal not null
-);
-insert into order_detail (o_id,i_id,qty,unit_price)
-values
-(1,2,10,12.00),
-(2,2,20,12.00),
-(3,1,5,120.00),
-(4,3,1,12.00),
-(5,2,10,12.00);
 
 create table get_total(
     select sum(qty * unit_price) as total from order_detail;

@@ -1,4 +1,4 @@
-package lk.ijse.hardware.util;
+/*package lk.ijse.hardware.util;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.paint.Paint;
@@ -16,6 +16,10 @@ public class Regex {
                 break;
             case EMAIL:
                 filed = "^([A-z])([A-z0-9.]){1,}[@]([A-z0-9]){1,10}[.]([A-z]){2,5}$";
+                break;
+            case A:
+                filed = "^[A-z|\\\\s]{3,}$";
+                break;
         }
 
         Pattern pattern = Pattern.compile(filed);
@@ -48,3 +52,4 @@ public class Regex {
         }
     }
 }
+*/

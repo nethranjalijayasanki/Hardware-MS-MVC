@@ -11,7 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -23,6 +28,12 @@ import lk.ijse.hardware.repository.OrderRepo;
 import lk.ijse.hardware.repository.ItemRepo;
 import lk.ijse.hardware.repository.PlaceOrderRepo;
 
+import lk.ijse.hardware.db.DbConnection;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -30,6 +41,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+//import lk.ijse.hardware.util.Regex;
+//import lk.ijse.hardware.util.JFXTextField;
+
 
 public class PlaceOrderFormController {
 
@@ -102,12 +116,12 @@ public class PlaceOrderFormController {
     }
 
     private void setCellValueFactory() {
-        colItemId.setCellValueFactory(new PropertyValueFactory<>("Item ID"));
+        colItemId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("Qty"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("Action"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("btnAction"));
     }
 
     private void getItemId() {
@@ -150,17 +164,21 @@ public class PlaceOrderFormController {
             lblOrderId.setText(nextOrderId);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+           throw new RuntimeException(e);
         }
     }
 
     private String generateNextOrderId(String currentId) {
         if(currentId != null) {
-            String[] split = currentId.split("O");  //" ", "2"
-            int idNum = Integer.parseInt(split[0]);
-            return "O" + ++idNum;
+           /* String[] split = currentId.split("O");  //" ", "2"
+            int idNum = Integer.parseInt(split[0]);*/
+            int c_id = Integer.parseInt(currentId);
+            c_id++;
+
+            return String.valueOf(c_id);
         }
-        return "01";
+        return "1";
     }
 
     private void setDate() {
@@ -224,7 +242,30 @@ public class PlaceOrderFormController {
         }
         lblNetTotal.setText(String.valueOf(netTotal));
     }
+/*
+    public void txtCustomerIDOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(TextField.ID,txtID);
+    }
 
+    public void txtCustomerEmailOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(TextField.EMAIL, txtEmail);
+    }
+
+    public boolean isValied(){
+        if (!Regex.setTextColor(TextField.ID,txtID)) return false;
+        if (!Regex.setTextColor(TextField.EMAIL,txtEmail)) return false;
+        return true;
+    }
+    @FXML
+    public void btnPrintOnAction(ActionEvent event) throws JRException {
+        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/report/placeOrder_form.fxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+        JasperViewer.viewReport(jasperPrint,false);
+
+    }
+*/
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));

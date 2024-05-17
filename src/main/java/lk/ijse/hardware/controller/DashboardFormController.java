@@ -4,19 +4,10 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import lk.ijse.hardware.db.DbConnection;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class DashboardFormController {
 
@@ -89,7 +80,7 @@ public void initialize(){
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         try {
-            AnchorPane root1 = FXMLLoader.load(getClass().getResource("/view/placeOrder_form.fxml"));
+            AnchorPane root1 = FXMLLoader.load(getClass().getResource("/report/placeOrder_form.fxml"));
             dashboardRoot1.getChildren().clear();
             dashboardRoot1.getChildren().add(root1);
 
