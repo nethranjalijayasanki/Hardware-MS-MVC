@@ -93,18 +93,44 @@ public class CustomerRepo {
 
         return null;
     }
-    public static List<String> getId() throws SQLException {
-        String sql = "SELECT c_id FROM customer";
+
+    public static List<String> getIds() throws SQLException {
+        String sql = "SELECT c_id FROM customers";
+        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
+
+        List<String> idList = new ArrayList<>();
+
+        ResultSet resultSet = pstm.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            idList.add(id);
+        }
+        return idList;
+
+    }
+
+    public static Customer searchById(String id) throws SQLException {
+        String sql = "SELECT * FROM customers WHERE c_id = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setObject(1, id);
 
         ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String c_id = resultSet.getString(1);
+            String name = resultSet.getString(2);
+            String address = resultSet.getString(3);
+            String tel = resultSet.getString(4);
+            String email = resultSet.getString(5);
 
-        List<String> idList = new ArrayList<>();
-        while (resultSet.next()) {
-            idList.add(resultSet.getString(1));
+            Customer customer = new Customer(c_id, name, address, tel,email);
+
+            return customer;
         }
-        return idList;
+
+        return null;
+
     }
 }

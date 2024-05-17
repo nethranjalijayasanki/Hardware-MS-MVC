@@ -92,9 +92,9 @@ public class TransportManageFormContoller {
     }
 
     private void setCellValueFactory() {
-        colTransportId.setCellValueFactory(new PropertyValueFactory<>("Transport ID"));
-        colDriverId.setCellValueFactory(new PropertyValueFactory<>("Driver ID"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        colTransportId.setCellValueFactory(new PropertyValueFactory<>("t_id"));
+        colDriverId.setCellValueFactory(new PropertyValueFactory<>("d_id"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
     }
     @FXML

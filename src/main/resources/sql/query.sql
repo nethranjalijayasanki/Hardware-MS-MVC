@@ -6,86 +6,125 @@ use hardware;
 
 create table users(
                      userId varchar(25),
-                     password varchar(10)
+                     password varchar(10),
+                     email varchar(50),
+                     tel varchar(10)
 );
-insert into users values ('sanki','123');
+insert into users values ('sanki','123',"sanki@gmail.com","0741252528");
 create table customers(
-                          c_id varchar(5) primary key,
+                          c_id int auto_increment primary key,
                           name varchar(25) not null ,
                           address varchar(50) not null ,
                           tel varchar(10) not null ,
                           email varchar(50) not null
 );
 
-insert into customers values ("C001","Dinidu","Horana","0741255458","dinidu@gmail.com");
-insert into customers values ("C002","sanki","Kaluthara","0741255558","sanki@gmail.com");
+insert into customers (name, address, tel, email)
+values
+("Dinidu","Horana","0741255458","dinidu@gmail.com"),
+("sanki","Kaluthara","0741255558","sanki@gmail.com"),
+("amali","Mathugama","0741255778","amali@gmail.com"),
+("kasun","Kaluthara","0741244458","kasun@gmail.com"),
+("damith","kandy","0746655558","damith@gmail.com");
 
 create table suppliers(
-                          s_id varchar(5) primary key,
+                          s_id int auto_increment primary key,
                           name varchar(25) not null ,
                           company varchar(50) not null ,
                           tel varchar(10) not null ,
                           email varchar(50) not null
 );
-insert into suppliers values ("S001","supun","sunil(plc)","0112457834","suniplc@gmail.com");
-insert into suppliers values ("S002","amal","perera(plc)","0112667834","pereraplc@gmail.com");
+insert into suppliers (name, company, tel, email)
+values
+("supun","sunil(plc)","0112457834","suniplc@gmail.com"),
+("amal","perera(plc)","0112667834","pereraplc@gmail.com"),
+("nihal","nihal(plc)","0112666634","nihalplc@gmail.com"),
+("kumari","kumari(plc)","0144667834","kumariplc@gmail.com"),
+("waruna","waruna(plc)","0112667664","warunaplc@gmail.com");
 
 create table items(
-                      i_id varchar(5) primary key,
+                      i_id int auto_increment primary key,
+                      s_id int,
+                      foreign key(s_id) references suppliers(s_id) on update cascade on delete cascade,
                       description varchar(25) not null ,
                       unit_price decimal not null ,
-                      s_id varchar(5),
-                      foreign key(s_id) references suppliers(s_id) on update cascade on delete cascade,
                       qty_on_hand int not null
 );
-insert into items values ("I001","paint",100.00,"S002",50);
-insert into items values ("I002","spray gun",90.00,"S001",40);
-
+insert into items (s_id,description, unit_price,  qty_on_hand)
+values
+(1,"paint",100.00,140),
+(1,"spray gun",90.00,160),
+(2,"brass screws",50.00,100),
+(3,"concreat nails",55.00,50),
+(4,"drawer locks",80.00,70);
 
 
 create table drivers(
-                        d_id varchar(5) primary key,
+                        d_id int auto_increment primary key,
                         name varchar(25) not null ,
                         tel varchar(10) not null ,
                         email varchar(50) not null,
                         work_time varchar(50) not null
 );
-insert into drivers values ("D001","amil","0112227834","pereraplc@gmail.com","8h");
-insert into drivers values ("D002","waruna","0116227834","warunaplc@gmail.com","6h");
+insert into drivers (name, tel, email, work_time)
+values
+("amil","0112227834","amil@gmail.com","8h"),
+("thilan","0116227834","thilan@gmail.com","6h"),
+("roshan","0116727834","roshan@gmail.com","7h"),
+("wijey","0116237834","wijey@gmail.com","7h"),
+("sunimal","0114227834","sunimal@gmail.com","7h");
 
 
 create table employees(
-                          e_id varchar(5) primary key,
+                          e_id int auto_increment primary key,
                           name varchar(20) not null ,
                           address varchar(20) not null ,
                           tel varchar(10) not null ,
                           email varchar(50) not null,
                           salary decimal not null ,
-                          c_id varchar(5)  ,
+                          c_id int ,
                           foreign key(c_id) references customers(c_id) on update cascade on delete cascade
 );
-insert into employees values ("E001","kasun","colombo",0116227834,"kasun@gmail.com",25000.00,"C001");
+insert into employees (name, address, tel, email, salary, c_id)
+values
+("kasun","gonapala",0116227834,"kasun@gmail.com",80000.00,2),
+("prasad","gonapala",0116221134,"prasad@gmail.com",25000.00,2),
+("gagni","pokunuwita",0116227334,"gagani@gmail.com",25000.00,3),
+("bineth","wekada",0116227224,"bineth@gmail.com",25000.00,1),
+("tharushika","horana",0116227774,"tharushika@gmail.com",50000.00,1);
 
 
 create table transports(
-                           t_id varchar(5) primary key,
+                           t_id int auto_increment primary key,
                            description varchar(50) not null ,
-                           d_id varchar(5) ,
+                           d_id int ,
                            foreign key(d_id) references drivers(d_id) on update cascade on delete cascade
 );
-insert into transports values ("T001","home improvement item","D001");
-insert into transports values ("T002","home improvement item","D001");
+insert into transports (description, d_id)
+values
+("home improvement item",1),
+("home improvement item",1),
+("building material",3),
+("building material",3),
+("home improvement item",5);
+
+
 
 create table orders(
-                       o_id varchar(5) primary key,
-                       name varchar(20) not null ,
-                       qty_on_hand int not null ,
-                       price decimal not null ,
-                       c_id varchar(5),
-                       foreign key(c_id) references customers(c_id) on update cascade on delete cascade,
-                       s_id varchar(5),
-                       foreign key(s_id) references suppliers(s_id) on update cascade on delete cascade
+                       o_id int auto_increment primary key,
+                       date date not null ,
+                       c_id int,
+                       foreign key(c_id) references customers(c_id) on update cascade on delete cascade
+
 );
+insert into orders (date,c_id)
+values
+('2024-05-01',2),
+('2024-05-05',1),
+('2024-05-08',3),
+('2024-05-12',4),
+('2024-05-18',5);
+
 /*
 create table payments(A
                          p_id varchar(5) primary key,
@@ -96,19 +135,29 @@ create table payments(A
                          foreign key(o_id) references orders(o_id) on update cascade on delete cascade
 );
 
- */
 
-create table order_item_detail(
-                                  o_qty_on_hand int not null ,
-                                  sold_item_count int not null ,
-                                  date date ,
-                                  unit_price decimal not null,
-                                  o_id varchar(5),
-                                  foreign key(o_id) references orders(o_id) on update cascade on delete cascade,
-                                  i_id varchar(5),
-                                  foreign key(i_id) references items(i_id) on update cascade on delete cascade
+
+create table order_detail(
+                            o_id int,
+                            foreign key(o_id) references orders(o_id) on update cascade on delete cascade,
+                            i_id int,
+                            foreign key(i_id) references items(i_id) on update cascade on delete cascade,
+                            qty int not null ,
+                            unit_price decimal not null
 );
-/*
+insert into order_detail (o_id,i_id,qty,unit_price)
+values
+(1,2,10,12.00),
+(2,2,20,12.00),
+(3,1,5,120.00),
+(4,3,1,12.00),
+(5,2,10,12.00);
+
+create table get_total(
+    select sum(qty * unit_price) as total from order_detail;
+);
+
+
 create table supplier_item_detail(
                                      o_purchase_price double not null ,
                                      o_purchase_item_count int not null ,

@@ -4,16 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 
 public class Order {
     private String o_id;
-    private String name;
-    private int qty_on_hand;
-    private double price;
+    private Date date;
     private String c_id;
-    private String s_id;
+
 
 }

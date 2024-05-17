@@ -12,7 +12,5 @@ import java.util.List;
 public class Place_Order {
     private Order order;
     private List<Order_Detail> odList;
-    private Supplier supplier;
-    private List<Supplier> supplierList;
 
 }

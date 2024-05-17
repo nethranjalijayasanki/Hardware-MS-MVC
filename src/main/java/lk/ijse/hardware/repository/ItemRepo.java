@@ -4,6 +4,7 @@ import lk.ijse.hardware.db.DbConnection;
 import lk.ijse.hardware.model.Customer;
 import lk.ijse.hardware.model.Employee;
 import lk.ijse.hardware.model.Item;
+import lk.ijse.hardware.model.Order_Detail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,20 +17,6 @@ public class ItemRepo {
 
     public static boolean save(Item item) throws SQLException {
         String sql = "INSERT INTO items VALUES(?, ?, ?, ?, ?)";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, item.getI_id());
-        pstm.setObject(2, item.getS_id());
-        pstm.setObject(3, item.getDescription());
-        pstm.setObject(4, item.getUnit_price());
-        pstm.setObject(5, item.getQty_on_hand());
-
-        return pstm.executeUpdate() > 0;
-    }
-
-    public static boolean update(Item item) throws SQLException {
-        String sql = "UPDATE items SET qtyOnHand = ?, unitPrice = ?, description = ?, s_id = ? WHERE i_id = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -65,52 +52,67 @@ public class ItemRepo {
             String i_id = resultSet.getString(1);
             String s_id = resultSet.getString(2);
             String description = resultSet.getString(3);
-            double unitPrice = Double.parseDouble(resultSet.getString(4));
-            int qtyOnHand = Integer.parseInt(resultSet.getString(5));
+            double unitPrice = resultSet.getDouble(4);
+            int qtyOnHand = resultSet.getInt(5);
 
             Item item = new Item(i_id, s_id, description, unitPrice, qtyOnHand);
             itemList.add(item);
         }
         return itemList;
-
     }
 
-    public static List<String> getId() throws SQLException {
-        String sql = "SELECT i_id FROM items";
-
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
-
-        List<String> idList = new ArrayList<>();
-        while (resultSet.next()) {
-            idList.add(resultSet.getString(1));
-        }
-        return idList;
-    }
-
-    public static Item searchByTId(String iId) throws SQLException {
+    public static Item searchById(String id) throws SQLException {
         String sql = "SELECT * FROM items WHERE i_id = ?";
+        PreparedStatement pstm = DbConnection.getInstance().getConnection()
+                .prepareStatement(sql);
 
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1, iId);
-
+        pstm.setObject(1, id);
         ResultSet resultSet = pstm.executeQuery();
-        if (resultSet.next()) {
-            String i_id = resultSet.getString(1);
-            String description = resultSet.getString(2);
-            double unit_price = Double.parseDouble(resultSet.getString(3));
-            int qty_on_hand = Integer.parseInt(resultSet.getString(4));
-            String s_id = resultSet.getString(5);
-
-
-            Item item = new Item(i_id,s_id, description, unit_price,qty_on_hand);
-
-            return item;
+        if(resultSet.next()) {
+            return new Item(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4),
+                    resultSet.getInt(5)
+            );
         }
-
         return null;
+
+    }
+
+    public static List<String> getCodes() throws SQLException {
+        String sql = "SELECT i_id FROM items";
+        ResultSet resultSet = DbConnection.getInstance()
+                .getConnection()
+                .prepareStatement(sql)
+                .executeQuery();
+
+        List<String> codeList = new ArrayList<>();
+        while (resultSet.next()) {
+            codeList.add(resultSet.getString(1));
+        }
+        return codeList;
+
+    }
+    public static boolean update(List<Order_Detail> odList) throws SQLException {
+        for (Order_Detail od : odList) {
+            boolean isUpdateQty = updateQty(odList);
+            if(!isUpdateQty) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean updateQty(List<Order_Detail> odList) throws SQLException {
+        String sql = "UPDATE items SET qty_on_hand = qty_on_hand - ? WHERE i_id = ?";
+        PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql);
+
+        for (Order_Detail od : odList){
+            pstm.setInt(1, Integer.parseInt(od.getI_id()));
+            pstm.setString(2, String.valueOf(od.getQty()));
+            pstm.executeUpdate();
+        }
+        return true;
     }
 }

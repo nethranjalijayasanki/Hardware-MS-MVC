@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class Transport {
     private String t_id;
-    private String description;
     private String d_id;
-
+    private String description;
 }

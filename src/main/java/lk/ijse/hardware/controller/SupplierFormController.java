@@ -116,7 +116,7 @@ public class SupplierFormController {
 
 
     private void setCellValueFactory() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("s_id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colCompany.setCellValueFactory(new PropertyValueFactory<>("Company"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("Tel"));

@@ -10,9 +10,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="421.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.hardware.controller.CustomerManageFormController">
+<AnchorPane prefHeight="570.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.hardware.controller.CustomerManageFormController">
    <children>
-      <AnchorPane fx:id="customerRoot" layoutX="7.0" prefHeight="421.0" prefWidth="700.0">
+      <AnchorPane fx:id="customerRoot" layoutX="7.0" prefHeight="570.0" prefWidth="1250.0">
          <children>
             <Label layoutX="-7.0" layoutY="32.0" opacity="0.7" prefHeight="35.0" prefWidth="269.0" style="-fx-background-color: #3498db;" text="   Customer Form" textFill="WHITE">
                <font>
@@ -20,7 +20,7 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498db" height="35.0" layoutX="245.0" layoutY="32.0" rotate="45.0" stroke="#3498db" strokeType="INSIDE" width="35.0" />
-            <JFXButton layoutX="624.0" layoutY="372.0" onAction="#btnBackOnAction" style="-fx-background-color: #3498db;" text="Back" textFill="#f8f6f6">
+            <JFXButton layoutX="1132.0" layoutY="500.0" onAction="#btnBackOnAction" opacity="0.88" style="-fx-background-color: #40739e;" text="Back" textFill="#f8f6f6">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <TableView fx:id="tblCustomer" layoutX="31.0" layoutY="212.0" prefHeight="137.0" prefWidth="639.0">
+            <TableView fx:id="tblCustomer" layoutX="52.0" layoutY="254.0" prefHeight="294.0" prefWidth="639.0">
               <columns>
                 <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="colName" prefWidth="150.0" text="Name" />
@@ -64,22 +64,22 @@
                   <TableColumn fx:id="colEmail" prefWidth="210.0" text="Email" />
               </columns>
             </TableView>
-            <JFXButton layoutX="506.0" layoutY="372.0" onAction="#btnDeleteOnAction" style="-fx-background-color: #e74c3c;" text="Delete" textFill="#f8f6f6">
+            <JFXButton layoutX="1014.0" layoutY="500.0" onAction="#btnDeleteOnAction" style="-fx-background-color: #e74c3c;" text="Delete" textFill="#f8f6f6">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="417.0" layoutY="372.0" onAction="#btnUpdateOnAction" style="-fx-background-color: #f1c40f;" text="Update" textFill="#f8f6f6">
+            <JFXButton layoutX="925.0" layoutY="500.0" onAction="#btnUpdateOnAction" style="-fx-background-color: #40739e;" text="Update" textFill="#f8f6f6">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="337.0" layoutY="372.0" onAction="#btnSaveOnAction" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #273c75;" text="Save" textFill="#f8f6f6">
+            <JFXButton layoutX="845.0" layoutY="500.0" onAction="#btnSaveOnAction" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #40739e;" text="Save" textFill="#f8f6f6">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </JFXButton>
-            <TextField layoutX="480.0" layoutY="32.0" onAction="#txtSearchOnAction" promptText="search by contact" />
+            <TextField layoutX="1043.0" layoutY="55.0" onAction="#txtSearchOnAction" promptText="search by contact" />
          </children>
       </AnchorPane>
    </children>

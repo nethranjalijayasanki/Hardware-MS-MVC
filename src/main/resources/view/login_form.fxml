@@ -8,52 +8,65 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.hardware.controller.LoginFormController">
+<AnchorPane fx:id="rootLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.hardware.controller.LoginFormController">
    <children>
-      <AnchorPane fx:id="dashboardRoot" prefHeight="500.0" prefWidth="295.0">
-         <children>
-            <ImageView fitHeight="142.0" fitWidth="200.0" layoutX="9.0" layoutY="134.0">
-               <image>
-                  <Image url="@../image/logiImage.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <ImageView fitHeight="500.0" fitWidth="700.0">
+      <ImageView fitHeight="680.0" fitWidth="1250.0">
          <image>
             <Image url="@../image/background.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="formRoot" layoutX="294.0" prefHeight="500.0" prefWidth="406.0" AnchorPane.leftAnchor="294.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="dashboardRoot" prefHeight="680.0" prefWidth="625.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Label layoutX="133.0" layoutY="49.0" text="login Form">
+            <Label layoutX="203.0" layoutY="53.0" text="Welcome  to the">
                <font>
-                  <Font name="System Bold" size="24.0" />
-               </font></Label>
-            <Label layoutX="67.0" layoutY="138.0" text="user name" />
-            <Label layoutX="67.0" layoutY="194.0" text="password" />
-            <JFXButton layoutX="142.0" layoutY="306.0" onAction="#btnLoginOnAction" prefHeight="31.0" prefWidth="135.0" style="-fx-background-color: #0097e6;" text="Login" textFill="#f5f3f3">
+                  <Font name="System Bold Italic" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="440.0" fitWidth="458.0" layoutX="96.0" layoutY="241.0">
+               <image>
+                  <Image url="@../image/logiImage.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="7.0" layoutY="21.0">
+               <image>
+                  <Image url="@../image/GreenMinimalistHomeLogo.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="332.0" layoutY="111.0" text="Hardware" textFill="#115b86">
                <font>
-                  <Font name="System Bold" size="15.0" />
-               </font></JFXButton>
-            <JFXTextField fx:id="txtId" layoutX="67.0" layoutY="152.0" />
-            <JFXTextField fx:id="txtPassword" layoutX="67.0" layoutY="208.0" />
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="22.0" layoutY="59.0" text="Welcome  to the">
+      <AnchorPane fx:id="formRoot" layoutX="650.0" prefHeight="680.0" prefWidth="600.0" AnchorPane.leftAnchor="650.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="273.0" layoutY="49.0" text="Login Form" AnchorPane.leftAnchor="207.0">
+               <font>
+                  <Font name="System Bold Italic" size="36.0" />
+               </font></Label>
+            <Label layoutX="196.0" layoutY="204.0" text="User Name" AnchorPane.leftAnchor="196.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label layoutX="200.0" layoutY="301.0" text="Password" AnchorPane.leftAnchor="200.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <JFXButton fx:id="btnLogin" layoutX="180.0" layoutY="423.0" onAction="#btnLoginOnAction" prefHeight="45.0" prefWidth="257.0" style="-fx-background-color: #0097e6;" text="Login Here" textFill="WHITE" AnchorPane.leftAnchor="180.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></JFXButton>
+            <JFXTextField fx:id="txtId" layoutX="196.0" layoutY="218.0" AnchorPane.leftAnchor="196.0" />
+            <JFXTextField fx:id="txtPassword" layoutX="200.0" layoutY="315.0" AnchorPane.leftAnchor="200.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="157.0" layoutY="109.0" text="Dewmini" textFill="#115b86">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="66.0" layoutY="113.0" text="Dewmini" textFill="#115b86">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="113.0" layoutY="166.0" text="Hardware" textFill="#115b86">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
+      <Label layoutX="42.0" layoutY="212.0" prefHeight="25.0" prefWidth="407.0" text="All data transmitted through this form is encrypted to ensure confidentiality." />
+      <Label layoutX="42.0" layoutY="187.0" prefHeight="25.0" prefWidth="249.0" text="Your privacy and security are important to us. " />
    </children>
 </AnchorPane>

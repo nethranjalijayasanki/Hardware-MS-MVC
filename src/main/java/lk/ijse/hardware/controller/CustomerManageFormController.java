@@ -115,7 +115,7 @@ public class CustomerManageFormController {
     }
 
     private void setCellValueFactory() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("c_id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("Address"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("Tel"));

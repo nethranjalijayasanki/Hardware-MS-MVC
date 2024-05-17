@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Customer;
 import lk.ijse.hardware.model.Item;
+import lk.ijse.hardware.model.Order_Detail;
 import lk.ijse.hardware.model.tm.ItemTm;
 import lk.ijse.hardware.repository.CustomerRepo;
 import lk.ijse.hardware.repository.ItemRepo;
@@ -68,7 +69,8 @@ public class ItemManageFormController {
             if (event.getCode() == KeyCode.ENTER) {
                 txtS_id.requestFocus();
             }
-        }); txtS_id.setOnKeyPressed(event -> {
+        });
+        txtS_id.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 txtDescription.requestFocus();
             }
@@ -115,8 +117,8 @@ public class ItemManageFormController {
     }
 
     private void setCellValueFactory() {
-        colI_id.setCellValueFactory(new PropertyValueFactory<>("Item ID"));
-        colS_id.setCellValueFactory(new PropertyValueFactory<>("Supplier ID"));
+        colI_id.setCellValueFactory(new PropertyValueFactory<>("i_id"));
+        colS_id.setCellValueFactory(new PropertyValueFactory<>("s_id"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("Unit Price"));
         colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("Qty On Hand"));
@@ -188,7 +190,7 @@ public class ItemManageFormController {
         Item item = new Item(i_id, s_id,description, unitPrice, qtyOnHand);
 
         try {
-            boolean isUpdated = ItemRepo.update(item);
+            boolean isUpdated = ItemRepo.update((List<Order_Detail>) item);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "item updated!").show();
             }
@@ -201,7 +203,7 @@ public class ItemManageFormController {
     void txtSearchOnAction(ActionEvent event) throws SQLException {
         String i_id = txtI_id.getText();
 
-        Item item = ItemRepo.searchByTId(i_id);
+        Item item = ItemRepo.searchById(i_id);
         if (item != null) {
             txtI_id.setText(item.getI_id());
             txtS_id.setText(item.getS_id());
