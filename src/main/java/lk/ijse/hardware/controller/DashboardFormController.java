@@ -80,7 +80,7 @@ public void initialize(){
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         try {
-            AnchorPane root1 = FXMLLoader.load(getClass().getResource("/report/placeOrder_form.fxml"));
+            AnchorPane root1 = FXMLLoader.load(getClass().getResource("/view/placeOrder_form.fxml"));
             dashboardRoot1.getChildren().clear();
             dashboardRoot1.getChildren().add(root1);
 
