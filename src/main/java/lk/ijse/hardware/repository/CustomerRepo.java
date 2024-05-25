@@ -80,18 +80,18 @@ public class CustomerRepo {
 
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
-            String c_id = resultSet.getString(1);
-            String name = resultSet.getString(2);
-            String address = resultSet.getString(3);
-            String tel = resultSet.getString(4);
-            String email = resultSet.getString(5);
+            return new Customer(
+            resultSet.getString(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getString(4),
+            resultSet.getString(5)
 
-            Customer customer = new Customer(c_id, name, address, tel, email);
+            );
+        }else {
 
-            return customer;
+            return null;
         }
-
-        return null;
     }
 
     public static List<String> getIds() throws SQLException {
@@ -132,5 +132,9 @@ public class CustomerRepo {
 
         return null;
 
+
+
     }
+
+
 }

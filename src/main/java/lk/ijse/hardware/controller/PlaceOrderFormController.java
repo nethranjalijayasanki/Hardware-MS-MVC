@@ -38,11 +38,9 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-//import lk.ijse.hardware.util.Regex;
-//import lk.ijse.hardware.util.JFXTextField;
+import java.util.*;
+
+import lk.ijse.hardware.util.Regex;
 
 
 public class PlaceOrderFormController {
@@ -75,10 +73,22 @@ public class PlaceOrderFormController {
     private TableColumn<?, ?> colUnitPrice;
 
     @FXML
-    private Label lblCustomerName;
+    private TextField txtDescription;
 
     @FXML
-    private Label lblDescription;
+    private TextField txtName;
+
+    @FXML
+    private TextField txtOId;
+
+    @FXML
+    private TextField txtQty;
+
+    @FXML
+    private TextField txtQtyOnHand;
+
+    @FXML
+    private TextField txtUnitPrice;
 
     @FXML
     private Label lblNetTotal;
@@ -87,22 +97,11 @@ public class PlaceOrderFormController {
     private Label lblOrderDate;
 
     @FXML
-    private Label lblOrderId;
-
-    @FXML
-    private Label lblQtyOnHand;
-
-    @FXML
-    private Label lblUnitPrice;
-
-    @FXML
     private AnchorPane rootPlaceOrder;
 
     @FXML
     private TableView<CartTm> tblOrderCart;
 
-    @FXML
-    private TextField txtQty;
 
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
 
@@ -161,7 +160,7 @@ public class PlaceOrderFormController {
             String currentId = OrderRepo.getCurrentId();
 
             String nextOrderId = generateNextOrderId(currentId);
-            lblOrderId.setText(nextOrderId);
+            txtOId.setText(nextOrderId);
 
         } catch (SQLException e) {
 
@@ -189,9 +188,9 @@ public class PlaceOrderFormController {
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
         String code = cmbItemId.getValue();
-        String description = lblDescription.getText();
+        String description = txtDescription.getText();
         int qty = Integer.parseInt(txtQty.getText());
-        double unitPrice = Double.parseDouble(lblUnitPrice.getText());
+        double unitPrice = Double.parseDouble(txtUnitPrice.getText());
         double total = qty * unitPrice;
         JFXButton btnRemove = new JFXButton("remove");
         btnRemove.setCursor(Cursor.HAND);
@@ -242,30 +241,22 @@ public class PlaceOrderFormController {
         }
         lblNetTotal.setText(String.valueOf(netTotal));
     }
-/*
-    public void txtCustomerIDOnKeyReleased(KeyEvent keyEvent) {
-        Regex.setTextColor(TextField.ID,txtID);
-    }
 
-    public void txtCustomerEmailOnKeyReleased(KeyEvent keyEvent) {
-        Regex.setTextColor(TextField.EMAIL, txtEmail);
-    }
-
-    public boolean isValied(){
-        if (!Regex.setTextColor(TextField.ID,txtID)) return false;
-        if (!Regex.setTextColor(TextField.EMAIL,txtEmail)) return false;
-        return true;
-    }
     @FXML
-    public void btnPrintOnAction(ActionEvent event) throws JRException {
-        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/report/placeOrder_form.fxml");
+    public void btnPrintOnAction(ActionEvent event) throws JRException, SQLException {
+        JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/report/Bill2.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+        Map<String,Object> data = new HashMap<>();
+        data.put("Total", lblNetTotal.getText());
+        data.put("OrderId",txtOId.getText());
+
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, data, DbConnection.getInstance().getConnection());
         JasperViewer.viewReport(jasperPrint,false);
 
     }
-*/
+
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard_form.fxml"));
@@ -283,7 +274,7 @@ public class PlaceOrderFormController {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
-        String o_id = lblOrderId.getText();
+        String o_id = txtOId.getText();
         Date date = Date.valueOf(LocalDate.now());
         String c_id = cbmCustomerId.getValue();
 
@@ -323,7 +314,7 @@ public class PlaceOrderFormController {
         try {
             Customer customer = CustomerRepo.searchById(id);
 
-            lblCustomerName.setText(customer.getName());
+            txtName.setText(customer.getName());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -337,9 +328,9 @@ public class PlaceOrderFormController {
         try {
             Item item = ItemRepo.searchById(code);
             if(item != null) {
-                lblDescription.setText(item.getDescription());
-                lblUnitPrice.setText(String.valueOf(item.getUnit_price()));
-                lblQtyOnHand.setText(String.valueOf(item.getQty_on_hand()));
+                txtDescription.setText(item.getDescription());
+                txtUnitPrice.setText(String.valueOf(item.getUnit_price()));
+                txtQtyOnHand.setText(String.valueOf(item.getQty_on_hand()));
             }
 
             txtQty.requestFocus();
@@ -354,4 +345,11 @@ public class PlaceOrderFormController {
         btnAddToCartOnAction(event);
     }
 
+    public void txtQtyOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.QTY,txtQty);
+    }
+    private boolean isValied(){
+       if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.QTY,txtQty)) return false;
+        return false;
+    }
 }

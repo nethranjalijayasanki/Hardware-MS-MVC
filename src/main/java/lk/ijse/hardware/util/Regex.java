@@ -1,24 +1,32 @@
-/*package lk.ijse.hardware.util;
+package lk.ijse.hardware.util;
 
-import com.jfoenix.controls.JFXTextField;
-import javafx.scene.paint.Paint;
+import javafx.scene.control.TextField;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Regex {
-    public static boolean isTextFieldValid(JFXTextField textField, String text){
+    public static boolean isTextFieldValid(lk.ijse.hardware.util.TextField textField, String text){
         String filed = "";
 
-        switch (JFXTextField){
+        switch (textField){
             case NAME:
                 filed = "^[A-z|\\\\s]{3,}$";
                 break;
             case EMAIL:
                 filed = "^([A-z])([A-z0-9.]){1,}[@]([A-z0-9]){1,10}[.]([A-z]){2,5}$";
                 break;
-            case A:
-                filed = "^[A-z|\\\\s]{3,}$";
+            case TEL:
+                filed = "^([+]94{1,3}|[0])([1-9]{2})([0-9]){7}$";
+                break;
+            case SALARY:
+                filed =  "^([0-9]){1,}[.]([0-9]){1,}$";
+                break;
+            case QTY:
+                filed = "^\\d+$";
+                break;
+            case PRICE:
+                filed =  "^([0-9]){1,}[.]([0-9]){1,}$";
                 break;
         }
 
@@ -40,16 +48,13 @@ public class Regex {
         return false;
     }
 
-    public static boolean setTextColor(JFXTextField location, JFXTextField textField){
+    public static boolean setTextColor(lk.ijse.hardware.util.TextField location, TextField textField){
         if (Regex.isTextFieldValid(location, textField.getText())){
-            textField.setFocusColor(Paint.valueOf("Green"));
-            textField.setUnFocusColor(Paint.valueOf("Green"));
-            return true;
+            textField.setStyle("-fx-text-fill: Green; ");
         }else {
-            textField.setFocusColor(Paint.valueOf("Red"));
-            textField.setUnFocusColor(Paint.valueOf("Red"));
+            textField.setStyle("-fx-text-fill: red;");
             return false;
         }
+        return false;
     }
 }
-*/

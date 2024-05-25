@@ -10,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Customer;
@@ -19,6 +21,7 @@ import lk.ijse.hardware.model.Employee;
 import lk.ijse.hardware.model.tm.EmployeeTm;
 import lk.ijse.hardware.repository.CustomerRepo;
 import lk.ijse.hardware.repository.EmployeeRepo;
+import lk.ijse.hardware.util.Regex;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -51,22 +54,22 @@ public class EmployeeManageFormController {
     private TableView<EmployeeTm> tblEmployee;
 
     @FXML
-    private JFXTextField txtAddress;
+    private TextField txtAddress;
 
     @FXML
-    private JFXTextField txtEmail;
+    private TextField txtEmail;
 
     @FXML
-    private JFXTextField txtId;
+    private TextField txtId;
 
     @FXML
-    private JFXTextField txtName;
+    private TextField txtName;
 
     @FXML
-    private JFXTextField txtSalary;
+    private TextField txtSalary;
 
     @FXML
-    private JFXTextField txtTel;
+    private TextField txtTel;
 
     public void initialize() {
 
@@ -235,4 +238,19 @@ public class EmployeeManageFormController {
 
     }
 
+    public void txtNameOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.NAME,txtName);
+    }
+
+    public void txtTelOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtTel);
+    }
+
+    public void txtEmailOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail);
+    }
+
+    public void txtSalaryOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.PRICE,txtSalary);
+    }
 }

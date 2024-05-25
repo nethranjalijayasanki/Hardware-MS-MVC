@@ -10,13 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Customer;
 import lk.ijse.hardware.model.tm.CustomerTm;
 import lk.ijse.hardware.repository.CustomerRepo;
+import lk.ijse.hardware.util.Regex;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -46,19 +49,19 @@ public class CustomerManageFormController {
     private TableView<CustomerTm> tblCustomer;
 
     @FXML
-    private JFXTextField txtAddress;
+    private TextField txtAddress;
 
     @FXML
-    private JFXTextField txtEmail;
+    private TextField txtEmail;
 
     @FXML
-    private JFXTextField txtId;
+    private TextField txtId;
 
     @FXML
-    private JFXTextField txtName;
+    private TextField txtName;
 
     @FXML
-    private JFXTextField txtTel;
+    private TextField txtTel;
 
     public void initialize() {
 
@@ -154,17 +157,18 @@ public class CustomerManageFormController {
         String tel = txtTel.getText();
         String email = txtEmail.getText();
 
-        Customer customer = new Customer(c_id, name, address, tel, email);
-
-        try {
-            boolean isSaved = CustomerRepo.save(customer);
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
-                clearFields();
+            try {
+                isValied();
+                Customer customer = new Customer(c_id, name, address, tel, email);
+                boolean isSaved = CustomerRepo.save(customer);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
+                    clearFields();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     private void clearFields() {
@@ -206,9 +210,25 @@ public class CustomerManageFormController {
             txtAddress.setText(customer.getAddress());
             txtTel.setText(customer.getTel());
             txtEmail.setText(customer.getEmail());
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
         }
 
+    }
+
+    public void txtNameOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.NAME,txtName);
+    }
+
+    public void txtTelOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtTel);
+    }
+
+    public void txtEmailOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail);
+    }
+    private boolean isValied(){
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.NAME,txtName)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtTel)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail)) return false;
+        return false;
     }
 }

@@ -10,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Customer;
@@ -20,6 +22,7 @@ import lk.ijse.hardware.model.Order_Detail;
 import lk.ijse.hardware.model.tm.ItemTm;
 import lk.ijse.hardware.repository.CustomerRepo;
 import lk.ijse.hardware.repository.ItemRepo;
+import lk.ijse.hardware.util.Regex;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,19 +53,19 @@ public class ItemManageFormController {
     private TableView<ItemTm> tblItem;
 
     @FXML
-    private JFXTextField txtDescription;
+    private TextField txtDescription;
 
     @FXML
-    private JFXTextField txtI_id;
+    private TextField txtI_id;
 
     @FXML
-    private JFXTextField txtS_id;
+    private TextField txtS_id;
 
     @FXML
-    private JFXTextField txtQtyOnHand;
+    private TextField txtQtyOnHand;
 
     @FXML
-    private JFXTextField txtUnitPrice;
+    private TextField txtUnitPrice;
     public void initialize() {
 
         txtI_id.setOnKeyPressed(event -> {
@@ -157,10 +160,9 @@ public class ItemManageFormController {
         double unitPrice = Double.parseDouble(txtUnitPrice.getText());
         int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
 
-
-        Item item = new Item(i_id, s_id,description, unitPrice, qtyOnHand);
-
         try {
+            isValied();
+            Item item = new Item(i_id, s_id,description, unitPrice, qtyOnHand);
             boolean isSaved = ItemRepo.save(item);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "item saved!").show();
@@ -216,4 +218,16 @@ public class ItemManageFormController {
         }
     }
 
+    public void txtUnitPriceOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.PRICE,txtUnitPrice);
+    }
+
+    public void txtQtyOnHandOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.QTY,txtQtyOnHand);
+    }
+    private boolean isValied(){
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.PRICE,txtUnitPrice)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.QTY,txtQtyOnHand)) return false;
+        return false;
+    }
 }

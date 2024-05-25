@@ -2,22 +2,20 @@ package lk.ijse.hardware.controller;
 
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 
-import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.db.DbConnection;
+import lk.ijse.hardware.util.Regex;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -33,16 +31,16 @@ public class RegistrationFormController {
     private AnchorPane regRoot;
 
     @FXML
-    private JFXTextField txtContact;
+    private TextField txtContact;
 
     @FXML
-    private JFXTextField txtEmail;
+    private TextField txtEmail;
 
     @FXML
-    private JFXTextField txtPassword;
+    private TextField txtPassword;
 
     @FXML
-    private JFXTextField txtUserId;
+    private TextField txtUserId;
 
     public void initialize() {
 
@@ -89,6 +87,7 @@ public class RegistrationFormController {
         String tel = txtContact.getText();
 
         try {
+            isValied();
             boolean isSaved = saveUser(userId, password, email, tel);
             if(isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "user saved!").show();
@@ -115,4 +114,16 @@ public class RegistrationFormController {
         return pstm.executeUpdate() > 0;
     }
 
+    public void txtEmailOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail);
+    }
+
+    public void txtContactOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtContact);
+    }
+    private boolean isValied(){
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtContact)) return false;
+        return false;
+    }
 }

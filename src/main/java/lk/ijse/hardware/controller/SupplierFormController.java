@@ -10,14 +10,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.hardware.model.Supplier;
 import lk.ijse.hardware.model.tm.SupplierTm;
 import lk.ijse.hardware.repository.CustomerRepo;
 import lk.ijse.hardware.repository.SupplierRepo;
+import lk.ijse.hardware.util.Regex;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -47,19 +50,19 @@ public class SupplierFormController {
     private TableView<SupplierTm> tblSupplier;
 
     @FXML
-    private JFXTextField txtCompany;
+    private TextField txtCompany;
 
     @FXML
-    private JFXTextField txtEmail;
+    private TextField txtEmail;
 
     @FXML
-    private JFXTextField txtId;
+    private TextField txtId;
 
     @FXML
-    private JFXTextField txtName;
+    private TextField txtName;
 
     @FXML
-    private JFXTextField txtTel;
+    private TextField txtTel;
     public void initialize() {
 
         txtId.setOnKeyPressed(event -> {
@@ -154,9 +157,11 @@ public class SupplierFormController {
         String tel = txtTel.getText();
         String email = txtEmail.getText();
 
-        Supplier supplier = new Supplier(c_id, name, company, tel, email);
+
 
         try {
+            isValied();
+            Supplier supplier = new Supplier(c_id, name, company, tel, email);
             boolean isSaved = SupplierRepo.save(supplier);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "supplier saved!").show();
@@ -211,4 +216,21 @@ public class SupplierFormController {
         }
     }
 
+    public void txtNameOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.NAME,txtName);
+    }
+
+    public void txtTelOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtTel);
+    }
+
+    public void txtEmailOnKeyReleased(KeyEvent keyEvent) {
+        Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail);
+    }
+    private boolean isValied(){
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.NAME,txtName)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.TEL,txtTel)) return false;
+        if (!Regex.setTextColor(lk.ijse.hardware.util.TextField.EMAIL,txtEmail)) return false;
+        return false;
+    }
 }

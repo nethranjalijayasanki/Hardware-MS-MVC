@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -42,13 +43,13 @@ public class TransportManageFormContoller {
     private AnchorPane transportRoot;
 
     @FXML
-    private JFXTextField txtDescription;
+    private TextField txtDescription;
 
     @FXML
-    private JFXTextField txtDriId;
+    private TextField txtDriId;
 
     @FXML
-    private JFXTextField txtTransId;
+    private TextField txtTransId;
     public void initialize() {
 
         txtTransId.setOnKeyPressed(event -> {
